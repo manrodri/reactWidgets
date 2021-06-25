@@ -6,7 +6,6 @@ phases:
       - pip install awscli
       - aws --version
       - echo installing npm dependencies
-      - cd app
       - npm install
   build:
     commands:
