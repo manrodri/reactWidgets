@@ -9,21 +9,16 @@ export class InfraStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        const repository = new codecommit.Repository(this, 'MyRepo', { repositoryName: 'widgetReact' });
-        const codecommitSource =
-            codebuild.Source.codeCommit({repository})
+        // const repository = new codecommit.Repository(this, 'MyRepo', { repositoryName: 'widgetReact' });
+        // const codecommitSource =
+        //     codebuild.Source.codeCommit({repository})
 
 
         // github source
         const gitHubSource = codebuild.Source.gitHub({
             owner: 'manrodri',
             repo: 'reactWidgets',
-            webhook: true, // optional, default: true if `webhookFilters` were provided, false otherwise
-            webhookFilters: [
-                codebuild.FilterGroup
-                    .inEventOf(codebuild.EventAction.PUSH)
-                    .andBranchIs('ts')
-            ], // optional, by default all pushes and Pull Requests will trigger a build
+
         });
 
         const frontendBucket = new s3.Bucket(this, 'frontendBucket', {
@@ -37,7 +32,7 @@ export class InfraStack extends cdk.Stack {
 
         const buildProject = new codebuild.Project(this, 'widgetReactProject', {
             source: gitHubSource,
-            buildSpec: BuildSpec.fromSourceFilename("ts-infra/buildspec.yaml"),
+            buildSpec: BuildSpec.fromSourceFilename("infra/buildspec.yaml"),
             projectName: "frontendCodeBuildJob",
             environment: {
                 buildImage: codebuild.LinuxBuildImage.STANDARD_5_0,
