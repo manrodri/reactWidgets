@@ -13,7 +13,7 @@ phases:
       - cd app
       - echo npm run build
 
-  post-build:
+  post_build:
     commands:
       - cd app
       - aws s3 sync ./build s3://${HOSTING_BUCKET}
