@@ -15,5 +15,6 @@ phases:
 
   post_build:
     commands:
-      - cd app
+      - pwd
+      - ls
       - aws s3 sync ./build s3://${HOSTING_BUCKET}
