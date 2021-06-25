@@ -18,6 +18,11 @@ export class InfraStack extends cdk.Stack {
         const gitHubSource = codebuild.Source.gitHub({
             owner: 'manrodri',
             repo: 'reactWidgets',
+            webhook: true,
+            webhookFilters: [
+                codebuild.FilterGroup
+                    .inEventOf(codebuild.EventAction.PUSH)
+                    .andBranchIs('master')]
 
         });
 
@@ -45,7 +50,10 @@ export class InfraStack extends cdk.Stack {
             }
         });
 
-        buildProject.role?.addToPolicy(new iam.PolicyStatement({actions: ["s3:*"], resources: [frontendBucket.bucketArn, `${frontendBucket.bucketArn}/*`]}))
+        buildProject.role?.addToPolicy(new iam.PolicyStatement({
+            actions: ["s3:*"],
+            resources: [frontendBucket.bucketArn, `${frontendBucket.bucketArn}/*`]
+        }))
 
 
     }
