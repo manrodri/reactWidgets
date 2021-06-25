@@ -11,10 +11,12 @@ phases:
   build:
     commands:
       - echo npm run build
-      - npm run build
+      - pwd
+      - ls
+#      - npm run build
 
   post_build:
     commands:
       - pwd
       - ls
-      - aws s3 sync ./build s3://${HOSTING_BUCKET}
+#      - aws s3 sync ./build s3://${HOSTING_BUCKET}
