@@ -17,7 +17,7 @@ export class InfraStack extends cdk.Stack {
         // github source
         const gitHubSource = codebuild.Source.gitHub({
             owner: 'manrodri',
-            repo: 'react_widgets',
+            repo: 'reactWidgets',
             webhook: true, // optional, default: true if `webhookFilters` were provided, false otherwise
             webhookFilters: [
                 codebuild.FilterGroup
