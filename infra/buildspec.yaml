@@ -1,0 +1,19 @@
+version: 0.2
+phases:
+  pre-build:
+    commands:
+      - echo installing aws cli
+      - pip install awscli
+      - aws --version
+      - echo installing npm dependencies
+      - cd app
+      - npm install
+  build:
+    commands:
+      - cd app
+      - echo npm run build
+
+  post-build:
+    commands:
+      - cd app
+      - aws s3 sync ./build s3://${HOSTING_BUCKET}
